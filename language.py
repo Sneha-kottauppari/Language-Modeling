@@ -37,7 +37,12 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def buildVocabulary(corpus):
-    return
+    vocab_in_corpus=[]
+    for each_list in corpus:
+        for word in each_list:
+            if word not in vocab_in_corpus:
+                vocab_in_corpus.append(word)
+    return vocab_in_corpus
 
 
 '''
@@ -47,7 +52,14 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
-    return
+    unigrams=buildVocabulary(corpus)
+    count_unigrams={}
+    for all in unigrams:
+        count_unigrams[all]=0
+    for word in unigrams:
+        for eachlist in corpus:
+            count_unigrams[word] += eachlist.count(word)
+    return count_unigrams
 
 
 '''
@@ -57,7 +69,11 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def getStartWords(corpus):
-    return
+    start_word=[]
+    for each_line in corpus:
+        if each_line[0] not in start_word:
+            start_word.append(each_line[0])
+    return start_word
 
 
 '''
@@ -67,7 +83,14 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countStartWords(corpus):
-    return
+    start_word_count={}
+    for each_line in corpus:
+        word=each_line[0]
+        if word not in start_word_count.keys():
+            start_word_count[word]=1
+        else:
+            start_word_count[word]+=1
+    return start_word_count
 
 
 '''
@@ -77,6 +100,7 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def countBigrams(corpus):
+
     return
 
 
@@ -303,3 +327,7 @@ if __name__ == "__main__":
 #     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
 #     test.runWeek3()
 # """
+    # test.testBuildVocabulary()
+    # test.testCountUnigrams()
+    # test.testGetStartWords()
+    test.testCountStartWords()
