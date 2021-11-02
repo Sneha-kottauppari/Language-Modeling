@@ -17,7 +17,14 @@ Parameters: str
 Returns: 2D list of strs
 '''
 def loadBook(filename):
-    return
+    fp=open(filename,'r')
+    lines=fp.readlines()
+    corpus_text=[]
+    for each_line in lines:
+        if len(each_line) > 1:
+            inner_list=each_line.split()
+            corpus_text.append(inner_list)
+    return corpus_text 
 
 
 '''
@@ -27,7 +34,10 @@ Parameters: 2D list of strs
 Returns: int
 '''
 def getCorpusLength(corpus):
-    return
+    corp_length=0
+    for each_list in corpus:
+        corp_length+= len(each_list)
+    return corp_length
 
 
 '''
@@ -37,7 +47,12 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def buildVocabulary(corpus):
-    return
+    vocab_in_corpus=[]
+    for each_list in corpus:
+        for word in each_list:
+            if word not in vocab_in_corpus:
+                vocab_in_corpus.append(word)
+    return vocab_in_corpus
 
 
 '''
@@ -47,7 +62,14 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
-    return
+    unigrams=buildVocabulary(corpus)
+    count_unigrams={}
+    for all in unigrams:
+        count_unigrams[all]=0
+    for word in unigrams:
+        for eachlist in corpus:
+            count_unigrams[word] += eachlist.count(word)
+    return count_unigrams
 
 
 '''
@@ -57,6 +79,7 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def getStartWords(corpus):
+    
     return
 
 
@@ -298,10 +321,10 @@ def scatterPlot(xs, ys, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-#     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-#     test.week1Tests()
-#     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-#     test.runWeek1()
+    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    test.week1Tests()
+    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek1()
 
 #     ## Uncomment these for Week 2 ##
 # """
@@ -316,4 +339,4 @@ if __name__ == "__main__":
 #     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
 #     test.runWeek3()
 # """
-    test.testCountBigrams()
+    # test.testCountBigrams()
