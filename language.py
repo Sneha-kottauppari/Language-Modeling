@@ -92,10 +92,14 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countStartWords(corpus):
-
-    return
-
-
+    start_word_count={}
+    for each_line in corpus:
+        word=each_line[0]
+        if word not in start_word_count.keys():
+            start_word_count[word]=1
+        else:
+            start_word_count[word]+=1
+    return start_word_count
 '''
 countBigrams(corpus)
 #6 [Check6-1]
