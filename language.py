@@ -52,7 +52,14 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
-    return
+    unigrams=buildVocabulary(corpus)
+    count_unigrams={}
+    for all in unigrams:
+        count_unigrams[all]=0
+    for word in unigrams:
+        for eachlist in corpus:
+            count_unigrams[word] += eachlist.count(word)
+    return count_unigrams
 
 
 '''
@@ -308,4 +315,5 @@ if __name__ == "__main__":
 #     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
 #     test.runWeek3()
 # """
-    test.testBuildVocabulary()
+    # test.testBuildVocabulary()
+    test.testCountUnigrams()
