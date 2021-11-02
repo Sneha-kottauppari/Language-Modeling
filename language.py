@@ -77,9 +77,22 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def countBigrams(corpus):
-    return
-
-
+    bigram_words={}
+    for each_line in corpus:
+        for i in range(len(each_line)-1):
+            first_word=each_line[i]
+            sec_word=each_line[i+1]
+            if (first_word not in bigram_words.keys()):
+                sec_word_count={}
+                sec_word_count[sec_word]=1
+                bigram_words[first_word]= sec_word_count
+                # print(bigram_words[first_word][sec_word])
+            else:
+                if sec_word not in bigram_words[first_word]:
+                    bigram_words[first_word][sec_word] = 1
+                else:
+                    bigram_words[first_word][sec_word]+=1
+    return bigram_words
 ### WEEK 2 ###
 
 '''
@@ -303,3 +316,4 @@ if __name__ == "__main__":
 #     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
 #     test.runWeek3()
 # """
+    test.testCountBigrams()
