@@ -17,7 +17,14 @@ Parameters: str
 Returns: 2D list of strs
 '''
 def loadBook(filename):
-    return
+    fp=open(filename,'r')
+    lines=fp.readlines()
+    corpus_text=[]
+    for each_line in lines:
+        if len(each_line) > 1:
+            inner_list=each_line.split()
+            corpus_text.append(inner_list)
+    return corpus_text
 
 
 '''
@@ -285,21 +292,23 @@ def scatterPlot(xs, ys, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-#     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-#     test.week1Tests()
-#     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-#     test.runWeek1()
+    
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek1()
 
-#     ## Uncomment these for Week 2 ##
-# """
-#     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-#     test.week2Tests()
-#     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
-#     test.runWeek2()
-# """
+    ## Uncomment these for Week 2 ##
 
-#     ## Uncomment these for Week 3 ##
-# """
-#     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
-#     test.runWeek3()
-# """
+    # print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
+    # test.week2Tests()
+    # print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek2()
+
+
+    ## Uncomment these for Week 3 ##
+
+    # print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek3()
+
+    test.testLoadBook()
