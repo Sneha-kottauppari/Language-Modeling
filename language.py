@@ -171,9 +171,18 @@ Parameters: int ; list of strs ; list of floats ; list of strs
 Returns: dict mapping strs to floats
 '''
 def getTopWords(count, words, probs, ignoreList):
-    return
-
-
+    full_dict={}
+    top_words={}
+    temp_dict={}
+    for i in range(len(words)):
+        full_dict[words[i]]=probs[i]
+    temp_dict=sorted(full_dict.items(),key= lambda x:x[1],reverse=True)
+    for each in temp_dict:
+        if len(top_words)<count:
+            if each[0] not in ignoreList:
+                top_words[each[0]]=each[1]
+    # print(top_words)
+    return top_words
 '''
 generateTextFromUnigrams(count, words, probs)
 #5 [Check6-2]
@@ -357,4 +366,5 @@ if __name__ == "__main__":
 # """
     # test.testCountBigrams()
     # test.testBuildUniformProbs()
-    test.testBuildUnigramProbs()
+    # test.testBuildUnigramProbs()
+    test.testGetTopWords()
