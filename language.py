@@ -146,7 +146,12 @@ Parameters: list of strs ; dict mapping strs to ints ; int
 Returns: list of floats
 '''
 def buildUnigramProbs(unigrams, unigramCounts, totalCount):
-    return
+    unigram_probability=[]
+    for word in unigrams:
+        count_of_unigram=unigramCounts[word]
+        probability=count_of_unigram/totalCount
+        unigram_probability.append(probability)
+    return unigram_probability
 
 
 '''
@@ -351,4 +356,5 @@ if __name__ == "__main__":
 #     test.runWeek3()
 # """
     # test.testCountBigrams()
-    test.testBuildUniformProbs()
+    # test.testBuildUniformProbs()
+    test.testBuildUnigramProbs()
