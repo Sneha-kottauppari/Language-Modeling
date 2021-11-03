@@ -34,7 +34,10 @@ Parameters: 2D list of strs
 Returns: int
 '''
 def getCorpusLength(corpus):
-    return
+    corp_length=0
+    for each_list in corpus:
+        corp_length+= len(each_list)
+    return corp_length
 
 
 '''
@@ -292,23 +295,22 @@ def scatterPlot(xs, ys, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    
-    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    # test.week1Tests()
-    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    # test.runWeek1()
+#     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+#     test.week1Tests()
+#     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+#     test.runWeek1()
 
-    ## Uncomment these for Week 2 ##
+#     ## Uncomment these for Week 2 ##
+# """
+#     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
+#     test.week2Tests()
+#     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
+#     test.runWeek2()
+# """
 
-    # print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    # test.week2Tests()
-    # print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
-    # test.runWeek2()
-
-
-    ## Uncomment these for Week 3 ##
-
-    # print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
-    # test.runWeek3()
-
-    test.testLoadBook()
+#     ## Uncomment these for Week 3 ##
+# """
+#     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
+#     test.runWeek3()
+# """
+    test.testGetCorpusLength()
