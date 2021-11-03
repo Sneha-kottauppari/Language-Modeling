@@ -10,8 +10,7 @@ def testLoadBook():
         ["hello", "and", "welcome", "to", "15-110", "."],
         ["we're", "happy", "to", "have", "you", "."] ])
     assert(loadBook("data/test2.txt") == [ 
-        ["this", "is", "the", "song", "that", "never", "ends"],
-        ["yes", "it", "goes", "on", "and", "on", "my", "friends", "!"],
+        ["this", "is", "the", "song", "that", "never", "ends"],["yes", "it", "goes", "on", "and", "on", "my", "friends", "!"],
         ["some", "people", "started", "singing", "it", ",", "not", "knowing", "what", "it", "was", ","],
         ["and", "now", "they", "keep", "on", "singing", "it", "forever", "just", "because", ".", ".", "."] ])
     print("... done!")
