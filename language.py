@@ -24,7 +24,7 @@ def loadBook(filename):
         if len(each_line) > 1:
             inner_list=each_line.split()
             corpus_text.append(inner_list)
-    return corpus_text
+    return corpus_text 
 
 
 '''
@@ -85,7 +85,6 @@ def getStartWords(corpus):
             start_word.append(each_line[0])
     return start_word
 
-
 '''
 countStartWords(corpus)
 #5 [Check6-1]
@@ -101,8 +100,6 @@ def countStartWords(corpus):
         else:
             start_word_count[word]+=1
     return start_word_count
-
-
 '''
 countBigrams(corpus)
 #6 [Check6-1]
@@ -110,10 +107,22 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def countBigrams(corpus):
-
-    return
-
-
+    bigram_words={}
+    for each_line in corpus:
+        for i in range(len(each_line)-1):
+            first_word=each_line[i]
+            sec_word=each_line[i+1]
+            if (first_word not in bigram_words.keys()):
+                sec_word_count={}
+                sec_word_count[sec_word]=1
+                bigram_words[first_word]= sec_word_count
+                # print(bigram_words[first_word][sec_word])
+            else:
+                if sec_word not in bigram_words[first_word]:
+                    bigram_words[first_word][sec_word] = 1
+                else:
+                    bigram_words[first_word][sec_word]+=1
+    return bigram_words
 ### WEEK 2 ###
 
 '''
@@ -319,10 +328,10 @@ def scatterPlot(xs, ys, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-#     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-#     test.week1Tests()
-#     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-#     test.runWeek1()
+    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    test.week1Tests()
+    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek1()
 
 #     ## Uncomment these for Week 2 ##
 # """
@@ -337,7 +346,4 @@ if __name__ == "__main__":
 #     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
 #     test.runWeek3()
 # """
-    # test.testBuildVocabulary()
-    # test.testCountUnigrams()
-    # test.testGetStartWords()
-    test.testCountStartWords()
+    # test.testCountBigrams()
