@@ -4,6 +4,7 @@ Name:
 Roll No:
 """
 
+from random import choices
 import language_tests as test
 
 project = "Language" # don't edit this
@@ -180,9 +181,19 @@ generateTextFromUnigrams(count, words, probs)
 Parameters: int ; list of strs ; list of floats
 Returns: str
 '''
-from random import choices
+from random import choices, random
+# import random as rnd
+# from numpy import random
+
 def generateTextFromUnigrams(count, words, probs):
-    return
+    list_sentence=[]
+    while len(list_sentence)<count:
+        random_word=choices(words,probs)
+        list_sentence.append(random_word[0])
+    sentence=list_sentence[0]
+    for i in range(len(list_sentence[1:])):
+        sentence=sentence+" "+list_sentence[i]
+    return sentence
 
 
 '''
@@ -357,4 +368,5 @@ if __name__ == "__main__":
 # """
     # test.testCountBigrams()
     # test.testBuildUniformProbs()
-    test.testBuildUnigramProbs()
+    # test.testBuildUnigramProbs()
+    test.testGenerateTextFromUnigrams()
