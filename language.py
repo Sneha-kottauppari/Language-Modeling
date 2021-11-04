@@ -161,6 +161,7 @@ Parameters: dict mapping strs to ints ; dict mapping strs to (dicts mapping strs
 Returns: dict mapping strs to (dicts mapping strs to (lists of values))
 '''
 def buildBigramProbs(unigramCounts, bigramCounts):
+
     return
 
 
@@ -180,7 +181,7 @@ generateTextFromUnigrams(count, words, probs)
 Parameters: int ; list of strs ; list of floats
 Returns: str
 '''
-from random import choices
+from random import choices, random
 def generateTextFromUnigrams(count, words, probs):
     return
 
@@ -192,7 +193,30 @@ Parameters: int ; list of strs ; list of floats ; dict mapping strs to (dicts ma
 Returns: str
 '''
 def generateTextFromBigrams(count, startWords, startWordProbs, bigramProbs):
-    return
+    list_of_words=[]
+    while len(list_of_words)<count:
+        if len(list_of_words)==0 or list_of_words[-1] == '.':
+            word=choices(startWords,startWordProbs)
+            # print("first word"*5)
+            # print(word)
+            list_of_words.append(word[0])
+
+        else:
+            Lword=list_of_words[-1]
+            # print("nex word"*5)
+            # print(Lword)
+            word_list=bigramProbs[Lword]["words"]
+            prob_list=bigramProbs[Lword]["probs"]
+            word=choices(word_list,prob_list)
+            list_of_words.append(word[0])
+    sentence=list_of_words[0]
+    # print("first sentence^"*5)
+    # print(sentence)
+    for i in list_of_words[1:]:
+        sentence=sentence+" "+i
+    # print("final sentence^"*5)
+    # print(sentence)
+    return sentence
 
 
 ### WEEK 3 ###
@@ -200,7 +224,7 @@ def generateTextFromBigrams(count, startWords, startWordProbs, bigramProbs):
 ignore = [ ",", ".", "?", "'", '"', "-", "!", ":", ";", "by", "around", "over",
            "a", "on", "be", "in", "the", "is", "on", "and", "to", "of", "it",
            "as", "an", "but", "at", "if", "so", "was", "were", "for", "this",
-           "that", "onto", "from", "not", "into" ]
+           "that", "onto", "from", "not", "into" ]           
 
 '''
 graphTop50Words(corpus)
@@ -357,4 +381,5 @@ if __name__ == "__main__":
 # """
     # test.testCountBigrams()
     # test.testBuildUniformProbs()
-    test.testBuildUnigramProbs()
+    # test.testBuildUnigramProbs()
+    test.testGenerateTextFromBigrams()
