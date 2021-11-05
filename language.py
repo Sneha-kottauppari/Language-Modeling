@@ -4,6 +4,7 @@ Name:
 Roll No:
 """
 
+from random import choices
 import language_tests as test
 
 project = "Language" # don't edit this
@@ -161,7 +162,22 @@ Parameters: dict mapping strs to ints ; dict mapping strs to (dicts mapping strs
 Returns: dict mapping strs to (dicts mapping strs to (lists of values))
 '''
 def buildBigramProbs(unigramCounts, bigramCounts):
-    return
+    # print("\n"*4,unigramCounts)
+    # print("\n"*4,bigramCounts,"\n"*2)
+    bigram_prob_dict={}
+    for key,inner_dict in bigramCounts.items():
+        words_list=[]
+        probabilities=[]
+        prevWord=key
+        bigram_prob_dict[prevWord]={}
+        for k,v in inner_dict.items():
+            words_list.append(k)
+            prob=v/unigramCounts[prevWord]
+            probabilities.append(prob)
+        bigram_prob_dict[prevWord]["words"]=words_list
+        bigram_prob_dict[prevWord]["probs"]=probabilities
+    # print(bigram_prob_dict)
+    return bigram_prob_dict
 
 
 '''
@@ -171,18 +187,37 @@ Parameters: int ; list of strs ; list of floats ; list of strs
 Returns: dict mapping strs to floats
 '''
 def getTopWords(count, words, probs, ignoreList):
-    return
-
-
+    full_dict={}
+    top_words={}
+    temp_dict={}
+    for i in range(len(words)):
+        full_dict[words[i]]=probs[i]
+    temp_dict=sorted(full_dict.items(),key= lambda x:x[1],reverse=True)
+    for each in temp_dict:
+        if len(top_words)<count:
+            if each[0] not in ignoreList:
+                top_words[each[0]]=each[1]
+    # print(top_words)
+    return top_words
 '''
 generateTextFromUnigrams(count, words, probs)
 #5 [Check6-2]
 Parameters: int ; list of strs ; list of floats
 Returns: str
 '''
-from random import choices
+from random import choices, random
+# import random as rnd
+# from numpy import random
+
 def generateTextFromUnigrams(count, words, probs):
-    return
+    list_sentence=[]
+    while len(list_sentence)<count:
+        random_word=choices(words,probs)
+        list_sentence.append(random_word[0])
+    sentence=list_sentence[0]
+    for i in range(len(list_sentence[1:])):
+        sentence=sentence+" "+list_sentence[i]
+    return sentence
 
 
 '''
