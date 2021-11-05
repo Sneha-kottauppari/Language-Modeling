@@ -393,4 +393,3 @@ if __name__ == "__main__":
     # test.testCountBigrams()
     # test.testBuildUniformProbs()
     # test.testBuildUnigramProbs()
-    test.testGenerateTextFromUnigrams()
