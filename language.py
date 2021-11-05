@@ -53,7 +53,7 @@ def buildVocabulary(corpus):
         for word in each_list:
             if word not in vocab_in_corpus:
                 vocab_in_corpus.append(word)
-    return vocab_in_corpus
+    return sorted(vocab_in_corpus)
 
 
 '''
@@ -256,7 +256,8 @@ def graphTop50Words(corpus):
     top_50_words={}
     unigrams= buildVocabulary(corpus)
     unigrams_count=countUnigrams(corpus)
-    unigrams_probs=buildUnigramProbs(unigrams,unigrams_count,len(unigrams))
+    len=getCorpusLength(corpus)
+    unigrams_probs=buildUnigramProbs(unigrams,unigrams_count,len)
     top_50_words=getTopWords(50,unigrams,unigrams_probs,ignore)
     barPlot(top_50_words,"top 50 unigrams")
     return
@@ -271,7 +272,8 @@ Returns: None
 def graphTopStartWords(corpus):
     start_words=getStartWords(corpus)
     start_words_counts=countStartWords(corpus)
-    start_words_probs=buildUnigramProbs(start_words,start_words_counts,len(start_words))
+    len=getCorpusLength(start_words)
+    start_words_probs=buildUnigramProbs(start_words,start_words_counts,len)
     top_start_words=getTopWords(50,start_words,start_words_probs,ignore)
     barPlot(top_start_words,"top 50 most frequent start words")
     return
@@ -299,7 +301,41 @@ Parameters: 2D list of strs ; 2D list of strs ; int
 Returns: dict mapping strs to (lists of values)
 '''
 def setupChartData(corpus1, corpus2, topWordCount):
-    return
+    ##aquiring first  corpus top words##
+    corpus1_unigrams=buildVocabulary(corpus1)
+    count_corpus1=countUnigrams(corpus1)
+    len_corpus1=getCorpusLength(corpus1)
+    unig_prob_corpus1=buildUnigramProbs(corpus1_unigrams,count_corpus1,len_corpus1)
+    topword_corpus1=getTopWords(topWordCount,corpus1_unigrams,unig_prob_corpus1,ignore)
+    ##aquiring second  corpus top words##
+    corpus2_unigrams=buildVocabulary(corpus2)
+    count_corpus2=countUnigrams(corpus2)
+    len_corpus2=getCorpusLength(corpus2)
+    unig_prob_corpus2=buildUnigramProbs(corpus2_unigrams,count_corpus2,len_corpus2)
+    topword_corpus2=getTopWords(topWordCount,corpus2_unigrams,unig_prob_corpus2,ignore)
+    ##combining top words and calculating probs list# #
+    combined_top_words=list(topword_corpus1.keys())
+    for k,v in topword_corpus2.items():
+        word=str(k)
+        if word not in combined_top_words:
+            combined_top_words.append(word)
+    corpus1_probs=[]
+    corpus2_probs=[]
+    final_result={}
+    for each in combined_top_words:
+        if each in corpus1_unigrams: 
+            index_word=corpus1_unigrams.index(each)
+            corpus1_probs.append(unig_prob_corpus1[index_word])
+        else : 
+            corpus1_probs.append(0)
+        if each in corpus2_unigrams: 
+            index_word=corpus2_unigrams.index(each)
+            corpus2_probs.append(unig_prob_corpus2[index_word])        
+        else : corpus2_probs.append(0)
+    final_result["topWords"]=combined_top_words
+    final_result["corpus1Probs"]=corpus1_probs
+    final_result["corpus2Probs"]=corpus2_probs
+    return final_result
 
 
 '''
@@ -309,6 +345,8 @@ Parameters: 2D list of strs ; str ; 2D list of strs ; str ; int ; str
 Returns: None
 '''
 def graphTopWordsSideBySide(corpus1, name1, corpus2, name2, numWords, title):
+    graph_data=setupChartData(corpus1,corpus2,50)
+    sideBySideBarPlots(graph_data["topWords"],graph_data["corpus1Probs"],graph_data["corpus2Probs"],name1,name2,title)
     return
 
 
@@ -319,6 +357,8 @@ Parameters: 2D list of strs ; 2D list of strs ; int ; str
 Returns: None
 '''
 def graphTopWordsInScatterplot(corpus1, corpus2, numWords, title):
+    data_for_scatter=setupChartData(corpus1,corpus2,30)
+    scatterPlot(data_for_scatter["corpus1Probs"],data_for_scatter["corpus2Probs"],data_for_scatter["topWords"],title)
     return
 
 
@@ -397,18 +437,18 @@ def scatterPlot(xs, ys, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek1()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek1()
 
 #     ## Uncomment these for Week 2 ##
 # """
-    print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    test.week2Tests()
-    print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek2()
-# """
+    # print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
+    # test.week2Tests()
+    # print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek2()
+# # """
 
 #     ## Uncomment these for Week 3 ##
 
@@ -419,3 +459,4 @@ if __name__ == "__main__":
     # test.testBuildUniformProbs()
     # test.testBuildUnigramProbs()
     # test.testGenerateTextFromBigrams()
+    # test.testSetupChartData()
