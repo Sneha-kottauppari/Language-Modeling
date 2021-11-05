@@ -240,6 +240,11 @@ Parameters: 2D list of strs ; str
 Returns: None
 '''
 def graphTopNextWords(corpus, word):
+    all_bigram_probs=buildBigramProbs(countUnigrams(corpus),countBigrams(corpus))
+    word_list=all_bigram_probs[word]["words"]
+    probs_list=all_bigram_probs[word]["probs"]
+    topnextwordsdict=getTopWords(10,word_list,probs_list,ignore)
+    barPlot(topnextwordsdict,"top next words of "+"-- "+word)
     return
 
 
