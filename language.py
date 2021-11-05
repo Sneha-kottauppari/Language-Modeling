@@ -4,6 +4,7 @@ Name:
 Roll No:
 """
 
+from random import choices
 import language_tests as test
 
 project = "Language" # don't edit this
@@ -161,8 +162,22 @@ Parameters: dict mapping strs to ints ; dict mapping strs to (dicts mapping strs
 Returns: dict mapping strs to (dicts mapping strs to (lists of values))
 '''
 def buildBigramProbs(unigramCounts, bigramCounts):
-
-    return
+    # print("\n"*4,unigramCounts)
+    # print("\n"*4,bigramCounts,"\n"*2)
+    bigram_prob_dict={}
+    for key,inner_dict in bigramCounts.items():
+        words_list=[]
+        probabilities=[]
+        prevWord=key
+        bigram_prob_dict[prevWord]={}
+        for k,v in inner_dict.items():
+            words_list.append(k)
+            prob=v/unigramCounts[prevWord]
+            probabilities.append(prob)
+        bigram_prob_dict[prevWord]["words"]=words_list
+        bigram_prob_dict[prevWord]["probs"]=probabilities
+    # print(bigram_prob_dict)
+    return bigram_prob_dict
 
 
 '''
@@ -172,9 +187,18 @@ Parameters: int ; list of strs ; list of floats ; list of strs
 Returns: dict mapping strs to floats
 '''
 def getTopWords(count, words, probs, ignoreList):
-    return
-
-
+    full_dict={}
+    top_words={}
+    temp_dict={}
+    for i in range(len(words)):
+        full_dict[words[i]]=probs[i]
+    temp_dict=sorted(full_dict.items(),key= lambda x:x[1],reverse=True)
+    for each in temp_dict:
+        if len(top_words)<count:
+            if each[0] not in ignoreList:
+                top_words[each[0]]=each[1]
+    # print(top_words)
+    return top_words
 '''
 generateTextFromUnigrams(count, words, probs)
 #5 [Check6-2]
@@ -183,7 +207,14 @@ Returns: str
 '''
 from random import choices, random
 def generateTextFromUnigrams(count, words, probs):
-    return
+    list_sentence=[]
+    while len(list_sentence)<count:
+        random_word=choices(words,probs)
+        list_sentence.append(random_word[0])
+    sentence=list_sentence[0]
+    for i in range(len(list_sentence[1:])):
+        sentence=sentence+" "+list_sentence[i]
+    return sentence
 
 
 '''
@@ -233,6 +264,12 @@ Parameters: 2D list of strs
 Returns: None
 '''
 def graphTop50Words(corpus):
+    top_50_words={}
+    unigrams= buildVocabulary(corpus)
+    unigrams_count=countUnigrams(corpus)
+    unigrams_probs=buildUnigramProbs(unigrams,unigrams_count,len(unigrams))
+    top_50_words=getTopWords(50,unigrams,unigrams_probs,ignore)
+    barPlot(top_50_words,"top 50 unigrams")
     return
 
 
@@ -243,6 +280,11 @@ Parameters: 2D list of strs
 Returns: None
 '''
 def graphTopStartWords(corpus):
+    start_words=getStartWords(corpus)
+    start_words_counts=countStartWords(corpus)
+    start_words_probs=buildUnigramProbs(start_words,start_words_counts,len(start_words))
+    top_start_words=getTopWords(50,start_words,start_words_probs,ignore)
+    barPlot(top_start_words,"top 50 most frequent start words")
     return
 
 
@@ -253,6 +295,11 @@ Parameters: 2D list of strs ; str
 Returns: None
 '''
 def graphTopNextWords(corpus, word):
+    all_bigram_probs=buildBigramProbs(countUnigrams(corpus),countBigrams(corpus))
+    word_list=all_bigram_probs[word]["words"]
+    probs_list=all_bigram_probs[word]["probs"]
+    topnextwordsdict=getTopWords(10,word_list,probs_list,ignore)
+    barPlot(topnextwordsdict,"top next words of "+"-- "+word)
     return
 
 
@@ -375,10 +422,10 @@ if __name__ == "__main__":
 # """
 
 #     ## Uncomment these for Week 3 ##
-# """
-#     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
-#     test.runWeek3()
-# """
+
+    print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek3()
+
     # test.testCountBigrams()
     # test.testBuildUniformProbs()
     # test.testBuildUnigramProbs()
