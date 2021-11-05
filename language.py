@@ -116,7 +116,7 @@ def countBigrams(corpus):
             if (first_word not in bigram_words.keys()):
                 sec_word_count={}
                 sec_word_count[sec_word]=1
-                bigram_words[first_word]= sec_word_coun
+                bigram_words[first_word]= sec_word_count
             else:
                 if sec_word not in bigram_words[first_word]:
                     bigram_words[first_word][sec_word] = 1
