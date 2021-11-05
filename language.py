@@ -116,8 +116,7 @@ def countBigrams(corpus):
             if (first_word not in bigram_words.keys()):
                 sec_word_count={}
                 sec_word_count[sec_word]=1
-                bigram_words[first_word]= sec_word_count
-                # print(bigram_words[first_word][sec_word])
+                bigram_words[first_word]= sec_word_coun
             else:
                 if sec_word not in bigram_words[first_word]:
                     bigram_words[first_word][sec_word] = 1
@@ -162,8 +161,6 @@ Parameters: dict mapping strs to ints ; dict mapping strs to (dicts mapping strs
 Returns: dict mapping strs to (dicts mapping strs to (lists of values))
 '''
 def buildBigramProbs(unigramCounts, bigramCounts):
-    # print("\n"*4,unigramCounts)
-    # print("\n"*4,bigramCounts,"\n"*2)
     bigram_prob_dict={}
     for key,inner_dict in bigramCounts.items():
         words_list=[]
@@ -176,7 +173,6 @@ def buildBigramProbs(unigramCounts, bigramCounts):
             probabilities.append(prob)
         bigram_prob_dict[prevWord]["words"]=words_list
         bigram_prob_dict[prevWord]["probs"]=probabilities
-    # print(bigram_prob_dict)
     return bigram_prob_dict
 
 
@@ -228,25 +224,18 @@ def generateTextFromBigrams(count, startWords, startWordProbs, bigramProbs):
     while len(list_of_words)<count:
         if len(list_of_words)==0 or list_of_words[-1] == '.':
             word=choices(startWords,startWordProbs)
-            # print("first word"*5)
-            # print(word)
             list_of_words.append(word[0])
 
         else:
             Lword=list_of_words[-1]
-            # print("nex word"*5)
-            # print(Lword)
             word_list=bigramProbs[Lword]["words"]
             prob_list=bigramProbs[Lword]["probs"]
             word=choices(word_list,prob_list)
             list_of_words.append(word[0])
     sentence=list_of_words[0]
-    # print("first sentence^"*5)
-    # print(sentence)
+
     for i in list_of_words[1:]:
         sentence=sentence+" "+i
-    # print("final sentence^"*5)
-    # print(sentence)
     return sentence
 
 
@@ -408,17 +397,17 @@ def scatterPlot(xs, ys, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    # test.week1Tests()
-    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    # test.runWeek1()
+    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    test.week1Tests()
+    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek1()
 
 #     ## Uncomment these for Week 2 ##
 # """
-#     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-#     test.week2Tests()
-#     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
-#     test.runWeek2()
+    print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
+    test.week2Tests()
+    print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek2()
 # """
 
 #     ## Uncomment these for Week 3 ##
@@ -429,4 +418,4 @@ if __name__ == "__main__":
     # test.testCountBigrams()
     # test.testBuildUniformProbs()
     # test.testBuildUnigramProbs()
-    test.testGenerateTextFromBigrams()
+    # test.testGenerateTextFromBigrams()
